@@ -1,25 +1,31 @@
-import logo from './logo.svg';
+import "bootstrap/dist/css/bootstrap.min.css";
+import Logout from "./Logout";
+import React, { useState, useEffect } from "react";
+import loginCookie from "./loginCookie";
+import Auth from "./Auth";
+import Name from "./Name";
 import './App.css';
 
 function App() {
+  const [isLogged, setIsLogged] = useState();
+
+  useEffect(() => {
+    loginCookie({ setIsLogged });
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="wrapper">
+      {!isLogged ? (
+        <Auth />
+      ) : (
+        <div className="page">
+          <Name />
+          <Logout />
+        </div>
+      )}
     </div>
   );
 }
+
 
 export default App;
